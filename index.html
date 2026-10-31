@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INE 315 — Final Exam and Coursework Guidelines</title>
+<style>
+:root{
+  --red:#990000; --red-2:#b83232; --ink:#1d1d1f; --ink-2:#55555c; --ink-3:#86868b;
+  --bg:#fbfaf8; --card:#ffffff; --line:#e3ddd6; --soft:#f5f1ec;
+  --blue:#175696; --blue-soft:#e8f0fb; --green:#1b6e4e; --green-soft:#e7f6ee;
+  --amber:#8c5a0a; --amber-soft:#fdf3e0; --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --red:#ff6b6b; --red-2:#ff8a8a; --ink:#f2f2f4; --ink-2:#b4b4bd; --ink-3:#86868b;
+    --bg:#15151a; --card:#1e1e25; --line:#33333e; --soft:#26262f;
+    --blue:#7fb3f0; --blue-soft:#1b2a3d; --green:#6fcfa0; --green-soft:#16302a;
+    --amber:#e8b45e; --amber-soft:#332814; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --red:#ff6b6b; --red-2:#ff8a8a; --ink:#f2f2f4; --ink-2:#b4b4bd; --ink-3:#86868b;
+  --bg:#15151a; --card:#1e1e25; --line:#33333e; --soft:#26262f;
+  --blue:#7fb3f0; --blue-soft:#1b2a3d; --green:#6fcfa0; --green-soft:#16302a;
+  --amber:#e8b45e; --amber-soft:#332814; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+.wrap{max-width:860px; margin:0 auto; padding:0 16px 72px}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.92em;
+  background:var(--soft); padding:.1em .38em; border-radius:4px; border:1px solid var(--line)}
+
+/* ---------- header ---------- */
+header{padding:34px 0 10px}
+.eyebrow{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+h1{margin:.28em 0 .1em; font-size:clamp(26px,5.2vw,38px); line-height:1.15; letter-spacing:-.02em}
+.sub{color:var(--ink-2); margin:0 0 18px; font-size:15px}
+
+/* ---------- section switch ---------- */
+.switch{display:flex; gap:8px; background:var(--soft); padding:5px; border-radius:12px;
+  border:1px solid var(--line); margin:0 0 16px; flex-wrap:wrap}
+.switch button{
+  flex:1 1 180px; border:0; background:transparent; color:var(--ink-2); font:inherit; font-weight:600;
+  padding:10px 12px; border-radius:9px; cursor:pointer; text-align:left; line-height:1.3;
+}
+.switch button small{display:block; font-weight:400; font-size:12.5px; color:var(--ink-3)}
+.switch button[aria-pressed="true"]{background:var(--card); color:var(--ink); box-shadow:var(--shadow)}
+.switch button[aria-pressed="true"] small{color:var(--ink-2)}
+
+/* ---------- when card ---------- */
+.when{
+  background:var(--card); border:1px solid var(--line); border-left:4px solid var(--red);
+  border-radius:12px; padding:18px 20px; box-shadow:var(--shadow); margin:0 0 14px;
+}
+.when .date{font-size:clamp(19px,3.6vw,24px); font-weight:700; letter-spacing:-.01em}
+.when .time{font-size:clamp(17px,3.2vw,20px); color:var(--red); font-weight:600; margin-top:2px}
+.when .meta{color:var(--ink-2); font-size:14px; margin-top:8px}
+.count{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap}
+.count div{background:var(--soft); border:1px solid var(--line); border-radius:9px;
+  padding:8px 12px; min-width:74px; text-align:center}
+.count b{display:block; font-size:21px; line-height:1.1; font-variant-numeric:tabular-nums}
+.count span{font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3)}
+
+/* ---------- at a glance ---------- */
+.glance{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:0 0 22px}
+.glance div{background:var(--card); border:1px solid var(--line); border-radius:11px; padding:13px 15px}
+.glance b{display:block; font-size:20px; letter-spacing:-.01em}
+.glance span{font-size:13px; color:var(--ink-2)}
+
+/* ---------- controls ---------- */
+.controls{position:sticky; top:0; z-index:5; background:var(--bg); padding:10px 0 8px; margin-bottom:4px}
+.search{position:relative}
+.search input{
+  width:100%; padding:12px 14px 12px 40px; font:inherit; color:var(--ink);
+  background:var(--card); border:1px solid var(--line); border-radius:10px; outline:none;
+}
+.search input:focus{border-color:var(--red); box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 16%,transparent)}
+.search svg{position:absolute; left:13px; top:50%; transform:translateY(-50%); opacity:.45}
+.chips{display:flex; gap:7px; flex-wrap:wrap; margin-top:9px}
+.chips button{
+  font:inherit; font-size:13px; font-weight:600; padding:6px 12px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--line); background:var(--card); color:var(--ink-2);
+}
+.chips button[aria-pressed="true"]{background:var(--red); border-color:var(--red); color:#fff}
+:root[data-theme="dark"] .chips button[aria-pressed="true"],
+@media (prefers-color-scheme: dark){}
+.hint{font-size:13px; color:var(--ink-3); margin:8px 2px 0; min-height:1.3em}
+
+/* ---------- faq ---------- */
+h2{font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--red);
+   margin:30px 0 10px; font-weight:700}
+.qa{background:var(--card); border:1px solid var(--line); border-radius:11px; margin:0 0 8px; overflow:hidden}
+.qa summary{
+  list-style:none; cursor:pointer; padding:14px 46px 14px 16px; position:relative;
+  font-weight:600; line-height:1.45;
+}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{
+  content:""; position:absolute; right:18px; top:50%; width:8px; height:8px;
+  border-right:2px solid var(--ink-3); border-bottom:2px solid var(--ink-3);
+  transform:translateY(-70%) rotate(45deg); transition:transform .18s;
+}
+.qa[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+.qa summary:hover{background:var(--soft)}
+.qa .body{padding:0 16px 16px; color:var(--ink-2)}
+.qa .body p{margin:.1em 0 .75em}
+.qa .body ul{margin:.1em 0 .8em; padding-left:1.15em}
+.qa .body li{margin:.3em 0}
+.qa .body strong{color:var(--ink)}
+mark{background:color-mix(in srgb,var(--red) 22%,transparent); color:inherit; border-radius:3px; padding:0 2px}
+
+.note{border-radius:9px; padding:11px 14px; margin:.4em 0 .8em; font-size:14.5px; border:1px solid}
+.note.blue{background:var(--blue-soft); border-color:color-mix(in srgb,var(--blue) 35%,transparent); color:var(--ink)}
+.note.green{background:var(--green-soft); border-color:color-mix(in srgb,var(--green) 35%,transparent); color:var(--ink)}
+.note.amber{background:var(--amber-soft); border-color:color-mix(in srgb,var(--amber) 40%,transparent); color:var(--ink)}
+
+table{border-collapse:collapse; width:100%; margin:.3em 0 .8em; font-size:14.5px}
+th,td{text-align:left; padding:7px 9px; border-bottom:1px solid var(--line)}
+th{font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3)}
+td.n{text-align:right; font-variant-numeric:tabular-nums}
+tr.tot td{font-weight:700; color:var(--ink); border-bottom:0}
+
+.yes,.no{display:inline-block; width:1.35em; font-weight:700}
+.yes{color:var(--green)} .no{color:var(--red)}
+
+footer{margin-top:46px; padding-top:18px; border-top:1px solid var(--line); color:var(--ink-3); font-size:13.5px}
+.empty{padding:26px 4px; color:var(--ink-3)}
+.theme{position:fixed; right:14px; bottom:14px; z-index:9; width:40px; height:40px; border-radius:50%;
+  border:1px solid var(--line); background:var(--card); color:var(--ink-2); cursor:pointer; box-shadow:var(--shadow);
+  font-size:17px; line-height:1}
+@media print{
+  .controls,.switch,.theme,.count{display:none}
+  .qa .body{display:block !important} .qa{break-inside:avoid; border:0; border-bottom:1px solid #ccc; border-radius:0}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" title="Light or dark">◐</button>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">INE 315 · Programming Applications for Industrial Engineering</div>
+  <h1>Final exam and coursework guidelines</h1>
+  <p class="sub">Exam preparation, marking, and coursework submission rules. Choose your
+  class section first — the two sections sit on different days.</p>
+</header>
+
+<div class="switch" role="group" aria-label="Choose your section">
+  <button id="s1" aria-pressed="true">Section 1 <small>the Monday class</small></button>
+  <button id="s2" aria-pressed="false">Section 2 <small>the Tuesday class</small></button>
+</div>
+
+<div class="when">
+  <div class="date" id="wDate"></div>
+  <div class="time" id="wTime"></div>
+  <div class="meta" id="wMeta"></div>
+  <div class="count" id="wCount"></div>
+</div>
+
+<div class="note amber" role="note" aria-label="Exam-room rules">
+  <p><strong>Do not start writing before the exam starts. Writing early will lead to a penalty.</strong></p>
+  <p>You cannot leave the exam room during the last 15 minutes of the exam.</p>
+</div>
+
+<div class="glance">
+  <div><b>120</b><span>minutes</span></div>
+  <div><b>100</b><span>marks</span></div>
+  <div><b>4</b><span>question groups</span></div>
+  <div><b>Open book</b><span>printed paper only</span></div>
+</div>
+
+<div class="controls">
+  <div class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Search — try deadline, late, project, assignment, hard…"
+           autocomplete="off" aria-label="Search the questions">
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="hint" id="hint"></div>
+</div>
+
+<div id="faq"></div>
+
+<footer>
+  <p><strong>Something not answered here?</strong> Ask in class or at office hours, and I will add it
+  to this page so everyone gets the same answer.</p>
+  <p id="stamp"></p>
+</footer>
+</div>
+
+<script>
+/* ------------------------------------------------------------------ data */
+var SECTIONS = {
+  s1:{ name:"Section 1", cls:"the Monday class",
+       day:"Monday", date:"30 November 2026", from:"11:00", to:"13:00",
+       iso:"2026-11-30T11:00:00+04:00", note:"" },
+  s2:{ name:"Section 2", cls:"the Tuesday class",
+       day:"Sunday", date:"6 December 2026", from:"14:00", to:"16:00",
+       iso:"2026-12-06T14:00:00+04:00",
+       note:"Read that again: your class is on Tuesday, but your exam is on a <strong>Sunday</strong>." }
+};
+
+var CATS = ["When and where","The paper","The rules","What is examinable","How to revise","Working through questions","Coursework submissions"];
+
+var FAQ = [
+/* ---------------------------------------------------- when and where */
+{c:0,q:"When is my exam?",a:
+"<p>Use the two buttons at the top of this page. The card below them shows your day, your date and your "+
+"time, and counts down to it.</p>"+
+"<div class='note amber'><strong>The two sections do not sit together.</strong> Section 1 sits on "+
+"Monday 30 November, 11:00 to 13:00. Section 2 sits on Sunday 6 December, 14:00 to 16:00. Go to your "+
+"own one.</div>"},
+
+{c:0,q:"Which section am I in?",a:
+"<p>The one whose weekly class you attend. If your INE 315 class is on <strong>Monday</strong> you are "+
+"Section 1. If it is on <strong>Tuesday</strong> you are Section 2. If you are not sure, check your "+
+"timetable before the last week of class, not on the day.</p>"},
+
+{c:0,q:"Where is the exam room?",a:
+"<p>The room is set by the university timetable, not by me. It will be announced before the last week "+
+"of class and it will appear on your own timetable.</p>"+
+"<p>Arrive <strong>ten minutes early</strong>. You will be given a seat number, and your work goes in a "+
+"folder that matches that seat.</p>"},
+
+{c:0,q:"What if I am ill, or I have a clash?",a:
+"<p>Tell me and the department <strong>as early as you can</strong>, and follow the university's own "+
+"process for a missed examination. Do not wait until after the exam to raise it.</p>"+
+"<p>A clash between two examinations is a timetable matter and is resolved by the department. It is not "+
+"something I can fix on the day.</p>"},
+
+{c:0,q:"Do the two sections sit the same paper?",a:
+"<p><strong>No.</strong> There are two papers. They are built to the same shape and the same difficulty, "+
+"and the questions are different.</p>"+
+"<div class='note blue'>Section 2 sits six days after Section 1. Asking a friend from the other section "+
+"what was on their paper will not help you, because it will not be on yours. Spend that time on the "+
+"practice paper instead.</div>"},
+
+/* ---------------------------------------------------- the paper */
+{c:1,q:"What does the paper look like?",a:
+"<p>Four question groups, each with <strong>two tasks on the computer</strong> and <strong>one written "+
+"question on paper</strong>. The paper totals <strong>74 coding marks and 26 written marks</strong>.</p>"+
+"<p>Use the practice paper to become familiar with the overall task format.</p>"},
+
+{c:1,q:"Is it on the computer or on paper?",a:
+"<p><strong>Both.</strong> You type Python at a computer in the exam room for 74 marks, and you write "+
+"answers by hand on the question paper for 26 marks.</p>"+
+"<p>You do not bring a laptop. A computer is provided, and your work goes in a seat folder such as "+
+"<code>C:\\EXAM\\seat 07</code>. Work only inside that folder.</p>"},
+
+{c:1,q:"How does the step-by-step marking work?",a:
+"<p>Every task has numbered steps and separate marking criteria. The steps and their marks are printed "+
+"inside the task file. Markers assess the code in your <strong>final saved submission</strong>.</p>"+
+"<p>Run the file to see <code>PASS</code> or <code>NOT YET</code> feedback. This feedback helps you check "+
+"working results. Markers also review incomplete code for the partial credit described in the rubric.</p>"+
+"<div class='note green'><strong>One error does not erase unrelated correct work.</strong> If one step "+
+"defeats you, write the later steps you know. Each criterion is marked separately.</div>"},
+
+{c:1,q:"Can incomplete code earn partial credit?",a:
+"<p>Markers assess the correct programming steps in your saved work. A failed run does not automatically "+
+"mean zero for the whole task.</p>"+
+"<p>Use the function names, inputs and outputs stated in the question. Save your work; the marker can "+
+"assess only what you submit.</p>"},
+
+{c:1,q:"What if I cannot finish a task?",a:
+"<p>Write the steps you can. A half-finished task is worth real marks; a blank one is worth nothing.</p>"+
+"<p>The same is true of the written questions. Two correct sentences earn more than a blank space, and "+
+"much more than a paragraph that avoids the question.</p>"},
+
+{c:1,q:"What if a file will not open on my machine?",a:
+"<p>Where a task reads a spreadsheet, the same rows are also provided as a <code>.csv</code> file. If "+
+"<code>read_excel</code> will not work at your seat, read the CSV instead.</p>"+
+"<div class='note green'>You lose <strong>no marks</strong> for doing that. It is written on the paper, "+
+"and it is there so that one broken library cannot cost you a section.</div>"},
+
+{c:1,q:"Do I have to save my work?",a:
+"<p><strong>Yes. Save every file before you leave.</strong> An unsaved file is an empty file, and an empty "+
+"file earns nothing.</p>"+
+"<p>Save as you go, not once at the end.</p>"},
+
+/* ---------------------------------------------------- the rules */
+{c:2,q:"When may I start writing?",a:
+"<p><strong>Do not start writing before the exam starts.</strong> Writing before the start of the exam "+
+"will lead to a penalty.</p>"},
+
+{c:2,q:"May I leave during the last 15 minutes?",a:
+"<p><strong>No.</strong> You cannot leave the exam room during the last <strong>15 minutes</strong> of "+
+"the exam.</p>"},
+
+{c:2,q:"What may I bring?",a:
+"<ul>"+
+"<li>Printed slides, printed lecture and lab code</li>"+
+"<li>A printed textbook</li>"+
+"<li>Your own printed or handwritten notes</li>"+
+"<li>The practice paper and its solutions, printed</li>"+
+"<li>A non-programmable calculator</li>"+
+"<li>Highlighting, annotating and tabs on all of it</li></ul>"+
+"<div class='note blue'><strong>Print what you will actually use and leave the rest at home.</strong> "+
+"Thirty pages you can find your way around beat three hundred you cannot.</div>"},
+
+{c:2,q:"What is not allowed?",a:
+"<ul>"+
+"<li>Any laptop, tablet, phone or smartwatch of your own</li>"+
+"<li>Electronic copies of anything, and e-readers</li>"+
+"<li>A calculator with stored notes</li>"+
+"<li>Sharing or borrowing anything during the exam</li></ul>"+
+"<p>The only electronic device you use is the computer at your seat.</p>"},
+
+{c:2,q:"Can I use the internet, Colab, or my own notebooks?",a:
+"<p><strong>No to all three.</strong> The internet is off in the exam room. You may not open Colab, your "+
+"saved notebooks, your email, or any file of your own.</p>"+
+"<p>On the exam computer you open <strong>only the files in your seat folder</strong>. Everything else you "+
+"bring is on paper.</p>"},
+
+{c:2,q:"Can I use AI tools?",a:
+"<p><strong>No.</strong> There is no internet in the room and no AI tool of any kind may be used. Doing so "+
+"is academic misconduct and is handled by the university, not by me.</p>"+
+"<p>This is also the practical reason the paper is marked step by step on a machine: it rewards what you "+
+"can actually type, which is the thing the course is for.</p>"},
+
+{c:2,q:"Are there files I must not touch?",a:
+"<p>Yes. Two files in your seat folder hold the data and the marking. Their names are printed on the "+
+"paper. <strong>Do not open them and do not change them.</strong> Both are checked afterwards.</p>"+
+"<p>Everything you need to write goes in the task files, which are clearly named.</p>"},
+
+/* ---------------------------------------------------- scope */
+{c:3,q:"What is examinable?",a:
+"<p>Weeks 1 to 12, <strong>except weeks 9 and 10</strong>, which are removed. In detail:</p>"+
+"<ul>"+
+"<li>Python foundations: lists, dictionaries, loops, <code>if</code>, functions, returning two values, "+
+"f-strings, <code>.copy()</code>, complexity read off a loop</li>"+
+"<li>Classes and objects, <strong>including a child class</strong> and <code>super().__init__</code></li>"+
+"<li>pandas and plotting: new columns, filters, <code>groupby</code>, sorting, the five plotting lines</li>"+
+"<li>Quality engineering in pandas, and the Pyomo transportation model</li>"+
+"<li>Shortest path with Dijkstra</li>"+
+"<li>Local search: hill climbing, restarts, simulated annealing</li>"+
+"<li>Genetic algorithms, and comparing two methods fairly</li>"+
+"<li>Building a report with a loop</li></ul>"+
+"<div class='note blue'>Your <strong>revision checklists</strong> list these as boxes you can tick. That is "+
+"the examinable list, written out in detail.</div>"},
+
+{c:3,q:"What is NOT examinable?",a:
+"<ul>"+
+"<li><strong>Weeks 9 and 10.</strong> <code>json.dumps</code> and <code>json.loads</code>, "+
+"<code>try</code>/<code>except</code>, and returning <code>None</code> are all removed.</li>"+
+"<li><strong>AI, large language models, prompting, sentiment analysis, agents.</strong> Removed from the "+
+"course. Not taught, not examined.</li>"+
+"<li><strong>Any hardware.</strong> No board, no sensor, no wiring, no MicroPython, no ESP32.</li>"+
+"<li><strong>Any messaging.</strong> No broker, no topics, no publish, no subscribe, no callbacks.</li>"+
+"<li><strong>Any industrial-engineering theory.</strong> Where a control limit comes from, why a model is "+
+"formulated that way, duality, the simplex method, why one algorithm is better in general, convergence, "+
+"significance tests.</li></ul>"},
+
+{c:3,q:"Do I have to remember any formulas?",a:
+"<p><strong>No. Not one.</strong></p>"+
+"<div class='note green'>Every formula, limit, rate, capacity, penalty and constant you need is "+
+"<strong>printed on the paper</strong>, at the question that needs it. You are assessed on your Python, "+
+"not on your memory.</div>"+
+"<p>If a question looks as though it is asking you to explain the theory, read it again. It wants the "+
+"code.</p>"},
+
+{c:3,q:"You removed the IoT weeks. So is that Python gone too?",a:
+"<p>Mostly, yes. <strong>Weeks 9 and 10 are removed completely</strong> \u2014 that means "+
+"<code>json.dumps</code>, <code>json.loads</code>, <code>try</code>/<code>except</code> and "+
+"returning <code>None</code>. None of it is examined.</p>"+
+"<p>What stays from <strong>week 8</strong> is ordinary Python: Booleans, <code>and</code> / "+
+"<code>or</code> / <code>not</code>, an <code>if</code>/<code>elif</code> chain, a boundary such as "+
+"<code>&gt;= 90</code>, f-strings, and reading a <code>while True</code> loop.</p>"+
+"<div class='note blue'>No hardware appears anywhere. If a control program is shown at all, it is "+
+"<strong>printed in full</strong> and every pin number and constant is marked as given. You only "+
+"have to read it.</div>"+
+"<p>Dictionaries are not affected \u2014 they are weeks 1 to 6 material, not IoT, and they are "+
+"examinable.</p>"},
+
+
+{c:3,q:"Are classes really examinable? That was the hardest topic.",a:
+"<p><strong>Yes, including inheritance.</strong> Most students told me classes were the hardest block of "+
+"the course, which is exactly why they are worth revising rather than avoiding.</p>"+
+"<p>What is asked is small: <code>__init__</code>, <code>self</code>, a few attributes, one or two "+
+"methods, a child class that calls <code>super().__init__</code>, and knowing which attribute wins when "+
+"the parent and the child both define one.</p>"},
+
+{c:3,q:"Is Dijkstra examinable? I do not remember the theory.",a:
+"<p>Yes, as <strong>code</strong>. You will never be asked to prove it is correct, to give its complexity, "+
+"or to compare it with another algorithm.</p>"+
+"<div class='note green'>If a question needs the method, <strong>the method is printed in the question</strong>, "+
+"in plain numbered sentences. Your job is to turn those sentences into Python.</div>"},
+
+/* ---------------------------------------------------- revision */
+{c:4,q:"What materials are there?",a:
+"<p>Use these preparation materials:</p>"+
+"<ul>"+
+"<li><strong>The revision checklists</strong> — one for the midterm material, then one for each of weeks 7 "+
+"to 12. Each is a list of things you should be able to do from a blank page.</li>"+
+"<li><strong>The tutorials and worksheets</strong> — with full solutions.</li>"+
+"<li><strong>The practice paper</strong>, using the overall format of the real paper.</li></ul>"+
+"<p>Use these materials to identify what you need to revise and practise.</p>"},
+
+{c:4,q:"If I only do one thing, what should it be?",a:
+"<div class='note green'><strong>Work down the revision checklists with a pen.</strong> Tick a box only "+
+"when you can do that thing from a blank page without looking it up — not when you recognise it.</div>"+
+"<p>Every unticked box is a mark you are choosing to leave on the table. There is no faster way to find "+
+"out what you do not know.</p>"},
+
+{c:4,q:"How should I use the practice paper?",a:
+"<ol>"+
+"<li>Attempt the practice paper with your notes open and no clock. Find out what you cannot do.</li>"+
+"<li>Go back to the checklists and the tutorials for those things only.</li>"+
+"<li>Attempt the practice paper again in 120 minutes, with only what you would carry into the room.</li></ol>"+
+"<div class='note amber'>Reading a solution is not practice. If you have not typed it, you cannot do it. "+
+"Every student who tells me the exam was harder than the practice paper read the practice paper.</div>"},
+
+{c:4,q:"I am worried I cannot code at all. What is the minimum?",a:
+"<p>Start at the checklists, at the <strong>earliest</strong> week you cannot fully tick, and go forward "+
+"from there. Do not start at Week 12.</p>"+
+"<p>Then get these right, because they appear in nearly every task:</p>"+
+"<ul>"+
+"<li>a new column, a filter with <code>&amp;</code>, a <code>groupby</code>, "+
+"<code>sort_values(ascending=False)</code></li>"+
+"<li>the five plotting lines</li>"+
+"<li>a function that takes data in and <code>return</code>s a value out</li>"+
+"<li><code>rows = []</code> before the loop, <code>.copy()</code> before you change a list</li></ul>"+
+"<div class='note green'>Come to office hours with a specific line that is not working. That is a far "+
+"better use of an hour than reading slides.</div>"},
+
+/* ---------------------------------------------------- working through questions */
+{c:5,q:"What if a question gives an unfamiliar rule?",a:
+"<p>Read the numbered instructions one step at a time. Identify the inputs, the changes made on each "+
+"pass and the result the function must return.</p>"+
+"<p>Use the formulas, constants and rules printed in the question. Check a small example by hand before "+
+"running your code.</p>"},
+
+{c:5,q:"How should I spend the 120 minutes?",a:
+"<ul>"+
+"<li>Read the whole paper first. <strong>Five minutes.</strong> You cannot plan what you have not read.</li>"+
+"<li>Choose the steps you can complete confidently. Run your files often.</li>"+
+"<li>The written questions as you reach them — they are short, and they are marked on their own.</li>"+
+"<li>Return to the more demanding steps with the time you have left.</li>"+
+"<li><strong>Save everything</strong> before you stand up.</li></ul>"+
+"<div class='note green'>If you are stuck on a step for more than three minutes, write what you can, move "+
+"on, and come back. The marks you lose to being stuck are always larger than the marks you lose to moving "+
+"on.</div>"},
+
+/* ---------------------------------------------------- coursework submissions */
+{c:6,q:"When are Assignment 2 and the group project due?",a:
+"<p>All dates and times below are <strong>UAE time (UTC+4)</strong>.</p>"+
+"<table><tr><th>Assessment</th><th>Submission deadline</th></tr>"+
+"<tr><td>Assignment 2</td><td><strong>20 November 2026, 10:00 AM</strong></td></tr>"+
+"<tr><td>Group project</td><td><strong>25 November 2026, 10:00 AM</strong></td></tr></table>"+
+"<p>Follow the submission instructions in the relevant assessment brief. Complete your submission by "+
+"the deadline and check that the required files were submitted successfully.</p>"+
+"<div class='note amber'><strong>Final cutoff for both assessments: 30 November 2026, 10:00 AM.</strong> "+
+"Any submission after this time receives <strong>zero marks</strong>. This cutoff is strictly enforced.</div>"},
+
+{c:6,q:"What are the late-submission penalties?",a:
+"<p>These rules apply to <strong>Assignment 2 and the group project</strong>. Penalties are marks out of "+
+"100 for that assessment, applied to the mark earned before the late penalty.</p>"+
+"<table><tr><th>Submission time</th><th>Mark after the late penalty</th></tr>"+
+"<tr><td>On or before the assessment deadline</td><td>No late penalty.</td></tr>"+
+"<tr><td>After the deadline, up to and including 4 hours late</td><td>Deduct <strong>10 marks</strong>, "+
+"with a minimum final mark of zero.</td></tr>"+
+"<tr><td>More than 4 hours late, up to the final cutoff</td><td>Use the <strong>higher final mark</strong> "+
+"from these two options: deduct 20 marks; or cap the original mark at 60. The result cannot exceed the "+
+"original mark.</td></tr>"+
+"<tr><td>After 30 November 2026, 10:00 AM UAE time</td><td><strong>Zero marks.</strong></td></tr></table>"+
+"<p>Exactly four hours late is <strong>2:00 PM on 20 November</strong> for Assignment 2 and "+
+"<strong>2:00 PM on 25 November</strong> for the group project.</p>"+
+"<p>For a submission more than four hours late but before the final cutoff: an original mark of "+
+"<strong>90 becomes 70</strong>; <strong>70 becomes 60</strong>; <strong>50 stays 50</strong>. "+
+"The 60-mark cap does not raise a mark below 60.</p>"+
+"<div class='note amber'><strong>These penalties and the final cutoff are strictly enforced.</strong></div>"},
+
+{c:6,q:"Can lateness be excused?",a:
+"<p><strong>Assignment 2:</strong> an excuse for lateness may be considered individually. You must provide "+
+"<strong>supporting documentation and a clear, well-defined reason</strong>. Consideration does not "+
+"guarantee that an excuse will be accepted. The final cutoff above still applies.</p>"+
+"<p><strong>Group project:</strong> no excuses for late submission are accepted. The late penalties and "+
+"final cutoff apply without exception.</p>"}
+];
+
+/* ------------------------------------------------------------------ build */
+var sec = "s1", cat = -1, term = "";
+
+function el(t, cls, html){ var e=document.createElement(t); if(cls)e.className=cls;
+  if(html!=null)e.innerHTML=html; return e; }
+
+function renderWhen(){
+  var s = SECTIONS[sec];
+  document.getElementById("wDate").textContent = s.day + " " + s.date;
+  document.getElementById("wTime").textContent = s.from + " \u2013 " + s.to;
+  document.getElementById("wMeta").innerHTML =
+    s.name + ", " + s.cls + " \u00b7 120 minutes \u00b7 100 marks" + (s.note ? "<br>" + s.note : "");
+  var box = document.getElementById("wCount"); box.innerHTML = "";
+  var diff = new Date(s.iso).getTime() - Date.now();
+  if (diff <= 0){ box.appendChild(el("div","", "<b>\u2014</b><span>good luck</span>")); return; }
+  var m = Math.floor(diff/60000), d = Math.floor(m/1440), h = Math.floor(m%1440/60);
+  box.appendChild(el("div","", "<b>"+d+"</b><span>days</span>"));
+  box.appendChild(el("div","", "<b>"+h+"</b><span>hours</span>"));
+  box.appendChild(el("div","", "<b>"+(m%60)+"</b><span>minutes</span>"));
+}
+
+function hi(text, t){
+  if(!t) return text;
+  var parts = text.split(/(<[^>]*>)/g);
+  var re = new RegExp("("+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");
+  for (var i=0;i<parts.length;i++){ if(parts[i][0] !== "<") parts[i]=parts[i].replace(re,"<mark>$1</mark>"); }
+  return parts.join("");
+}
+
+function render(){
+  var host = document.getElementById("faq"); host.innerHTML = "";
+  var t = term.trim().toLowerCase(), shown = 0;
+  for (var c=0; c<CATS.length; c++){
+    if (cat !== -1 && cat !== c) continue;
+    var items = FAQ.filter(function(f){
+      if (f.c !== c) return false;
+      if (!t) return true;
+      return (f.q + " " + f.a).toLowerCase().replace(/<[^>]*>/g," ").indexOf(t) !== -1;
+    });
+    if (!items.length) continue;
+    host.appendChild(el("h2", null, CATS[c]));
+    items.forEach(function(f){
+      var d = el("details","qa");
+      var sm = el("summary", null, hi(f.q, t));
+      d.appendChild(sm);
+      d.appendChild(el("div","body", hi(f.a, t)));
+      if (t) d.open = true;
+      host.appendChild(d);
+      shown++;
+    });
+  }
+  var hint = document.getElementById("hint");
+  if (!shown){
+    host.appendChild(el("div","empty",
+      "Nothing matches \u201c"+term+"\u201d. Try a shorter word, or ask me and I will add it."));
+    hint.textContent = "";
+  } else {
+    hint.textContent = (t || cat !== -1)
+      ? shown + (shown === 1 ? " question" : " questions") + " shown"
+      : FAQ.length + " questions. Search, or pick a topic.";
+  }
+}
+
+/* chips */
+var chips = document.getElementById("chips");
+function addChip(label, idx){
+  var b = el("button", null, label);
+  b.setAttribute("aria-pressed", String(cat === idx));
+  b.onclick = function(){
+    cat = (cat === idx) ? -1 : idx;
+    [].forEach.call(chips.children, function(x, i){
+      x.setAttribute("aria-pressed", String(cat === (i ? i-1 : -1)));
+    });
+    render();
+  };
+  chips.appendChild(b);
+}
+addChip("All", -1);
+CATS.forEach(function(c, i){ addChip(c, i); });
+
+/* section buttons */
+function pick(which){
+  sec = which;
+  document.getElementById("s1").setAttribute("aria-pressed", String(which === "s1"));
+  document.getElementById("s2").setAttribute("aria-pressed", String(which === "s2"));
+  renderWhen();
+}
+document.getElementById("s1").onclick = function(){ pick("s1"); };
+document.getElementById("s2").onclick = function(){ pick("s2"); };
+
+document.getElementById("q").addEventListener("input", function(e){
+  term = e.target.value; render();
+});
+
+document.getElementById("theme").onclick = function(){
+  var r = document.documentElement;
+  var dark = r.getAttribute("data-theme") === "dark" ||
+    (!r.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  r.setAttribute("data-theme", dark ? "light" : "dark");
+};
+
+document.getElementById("stamp").textContent =
+  "INE 315, Fall 2026. This page is updated when something changes \u2014 reload it before the exam.";
+
+pick("s1");
+render();
+setInterval(renderWhen, 30000);
+</script>
+</body>
+</html>
