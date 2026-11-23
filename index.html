@@ -67,6 +67,26 @@ h1{margin:.28em 0 .1em; font-size:clamp(26px,5.2vw,38px); line-height:1.15; lett
 .count b{display:block; font-size:21px; line-height:1.1; font-variant-numeric:tabular-nums}
 .count span{font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3)}
 
+/* ---------- exam download ---------- */
+.downloads{background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:0 0 18px; box-shadow:var(--shadow)}
+.downloads h2{margin:0 0 9px; font-size:17px; line-height:1.3; letter-spacing:0;
+  text-transform:none; color:var(--ink)}
+.downloads p{margin:0 0 10px; color:var(--ink-2); font-size:14.5px}
+.downloads label{display:block; font-weight:600; margin:0 0 5px; font-size:14px}
+.downloads select{width:100%; max-width:360px; padding:10px 12px; border:1px solid var(--line);
+  border-radius:8px; background:var(--card); color:var(--ink); font:inherit}
+.downloads select:focus-visible,.downloads a:focus-visible{outline:3px solid var(--blue); outline-offset:3px}
+.downloads .package-status{margin:11px 0; min-height:1.5em; color:var(--ink); font-weight:600}
+.download-link,.download-placeholder{display:inline-block; max-width:100%; padding:10px 15px;
+  border:1px solid var(--blue); border-radius:8px; font:inherit; font-weight:600; line-height:1.4;
+  text-align:center; text-decoration:none}
+.download-link{background:var(--blue); color:var(--card)}
+.download-link:hover{filter:brightness(.92)}
+.download-placeholder{background:var(--soft); color:var(--ink-3); border-color:var(--line)}
+.downloads .download-help{font-size:13px; margin:11px 0 0}
+.downloads [hidden]{display:none !important}
+
 /* ---------- at a glance ---------- */
 .glance{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:0 0 22px}
 .glance div{background:var(--card); border:1px solid var(--line); border-radius:11px; padding:13px 15px}
@@ -164,6 +184,27 @@ footer{margin-top:46px; padding-top:18px; border-top:1px solid var(--line); colo
   <div class="count" id="wCount"></div>
 </div>
 
+<section class="downloads" aria-labelledby="downloadTitle">
+  <h2 id="downloadTitle">Download your exam package</h2>
+  <p id="groupHelp">Choose your class section above, then select the <strong>exam group assigned by your
+  instructor</strong>. If you do not know your group number, ask the instructor before downloading.</p>
+  <label for="examGroup">Your assigned exam group</label>
+  <select id="examGroup" aria-describedby="groupHelp packageSelection">
+    <option value="">Choose your assigned group</option>
+    <option value="1">Group 1</option>
+    <option value="2">Group 2</option>
+    <option value="3">Group 3</option>
+    <option value="4">Group 4</option>
+  </select>
+  <p class="package-status" id="packageSelection" role="status" aria-live="polite"></p>
+  <button class="download-placeholder" id="downloadPlaceholder" type="button" disabled>Choose a group first</button>
+  <a class="download-link" id="groupDownload" hidden download>Download your exam package</a>
+  <p class="download-help">Extract your package into its own folder. Its README, Python task files and
+  data belong to that Section and Group. Before coding, confirm that they match your printed paper.
+  Keep the question paper closed until the exam starts.</p>
+  <noscript><p>Enable JavaScript to choose your Section and Group, or ask the instructor for the correct package.</p></noscript>
+</section>
+
 <a class="timer-link" href="exam_timer.html">Exam-room timer</a>
 
 <div class="note amber" role="note" aria-label="Exam-room rules">
@@ -213,7 +254,7 @@ var SECTIONS = {
        note:"Read that again: your class is on Tuesday, but your exam is on a <strong>Sunday</strong>." }
 };
 
-var CATS = ["When and where","The paper","The rules","What is examinable","How to revise","Working through questions","Coursework submissions"];
+var CATS = ["When and where","The paper","The rules","What is examinable","How to revise","Working through questions","Coursework submissions","Group project submission"];
 
 var FAQ = [
 /* ---------------------------------------------------- when and where */
@@ -241,8 +282,8 @@ var FAQ = [
 "something I can fix on the day.</p>"},
 
 {c:0,q:"Do the two sections sit the same paper?",a:
-"<p><strong>No.</strong> There are two papers. They are built to the same shape and the same difficulty, "+
-"and the questions are different.</p>"+
+"<p><strong>No.</strong> Each section has its own examination. Use the package for your section and "+
+"assigned exam group. The sections have the same overall format and difficulty, but different questions.</p>"+
 "<div class='note blue'>Section 2 sits six days after Section 1. Asking a friend from the other section "+
 "what was on their paper will not help you, because it will not be on yours. Spend that time on the "+
 "practice paper instead.</div>"},
@@ -261,9 +302,10 @@ var FAQ = [
 
 {c:1,q:"How does the step-by-step marking work?",a:
 "<p>Every task has numbered steps and separate marking criteria. The steps and their marks are printed "+
-"inside the task file. Markers assess the code in your <strong>final saved submission</strong>.</p>"+
-"<p>Run the file to see <code>PASS</code> or <code>NOT YET</code> feedback. This feedback helps you check "+
-"working results. Markers also review incomplete code for the partial credit described in the rubric.</p>"+
+"on the question paper. Markers assess the code in your <strong>final saved submission</strong>.</p>"+
+"<p>Each Python task file contains direct sample calls. Run the file to inspect your own output and "+
+"debug your code. These calls do not give correctness verdicts or marks. Markers also review incomplete "+
+"code for the partial credit described in the rubric.</p>"+
 "<div class='note green'><strong>One error does not erase unrelated correct work.</strong> If one step "+
 "defeats you, write the later steps you know. Each criterion is marked separately.</div>"},
 
@@ -330,9 +372,10 @@ var FAQ = [
 "can actually type, which is the thing the course is for.</p>"},
 
 {c:2,q:"Are there files I must not touch?",a:
-"<p>Yes. Two files in your seat folder hold the data and the marking. Their names are printed on the "+
-"paper. <strong>Do not open them and do not change them.</strong> Both are checked afterwards.</p>"+
-"<p>Everything you need to write goes in the task files, which are clearly named.</p>"},
+"<p>Keep the supplied data files and the given <code>exam_support.py</code> helpers "+
+"<strong>unchanged</strong>. The question paper names the files and inputs needed for each task.</p>"+
+"<p>Write and save your answers in the task files named on your Section and Group paper. The student "+
+"package contains no marking or correctness-checking file.</p>"},
 
 /* ---------------------------------------------------- scope */
 {c:3,q:"What is examinable?",a:
@@ -486,7 +529,33 @@ var FAQ = [
 "<strong>supporting documentation and a clear, well-defined reason</strong>. Consideration does not "+
 "guarantee that an excuse will be accepted. The final cutoff above still applies.</p>"+
 "<p><strong>Group project:</strong> no excuses for late submission are accepted. The late penalties and "+
-"final cutoff apply without exception.</p>"}
+"final cutoff apply without exception.</p>"},
+
+/* ---------------------------------------------------- group project submission */
+{c:7,q:"I do not know which group I belong to. Where can I find this information?",a:
+"<p>The group list was posted on <strong>iLearn two months ago</strong>. Please check that list to "+
+"find your group.</p>"},
+
+{c:7,q:"Does every group member need to submit the report?",a:
+"<p>No. Only <strong>one submission per group</strong> is required. Make sure every group member's "+
+"name appears in the report.</p>"+
+"<p>If your name does not appear in <strong>any submitted report</strong>, you may receive "+
+"<strong>zero marks for the group project</strong>.</p>"},
+
+{c:7,q:"Can I submit the group project after the final cutoff?",a:
+"<div class='note amber'>Any group-project submission after <strong>30 November 2026 at 10:00 AM "+
+"UAE time (UTC+4)</strong> receives <strong>zero marks</strong>. This cutoff is strictly enforced.</div>"},
+
+{c:7,q:"What should I do if another group member does not participate or contributes too little?",a:
+"<p><strong>Email me directly</strong> and include a <strong>contribution table</strong> in the "+
+"submitted report showing what each member contributed.</p>"+
+"<p>Members reported as not actively participating may receive penalties.</p>"},
+
+{c:7,q:"I did not know there was a group project. Can it be waived so that I receive full marks?",a:
+"<p><strong>No.</strong> Being unaware of the group project is not a valid reason to waive it or "+
+"award full marks.</p>"+
+"<p>I sent multiple reminder emails and announced the project repeatedly in class. The project "+
+"instructions have also been available on <strong>iLearn since the beginning of the semester</strong>.</p>"}
 ];
 
 /* ------------------------------------------------------------------ build */
@@ -510,6 +579,29 @@ function renderWhen(){
   box.appendChild(el("div","", "<b>"+d+"</b><span>days</span>"));
   box.appendChild(el("div","", "<b>"+h+"</b><span>hours</span>"));
   box.appendChild(el("div","", "<b>"+(m%60)+"</b><span>minutes</span>"));
+}
+
+function renderDownload(){
+  var section = sec === "s1" ? 1 : 2;
+  var group = document.getElementById("examGroup").value;
+  var link = document.getElementById("groupDownload");
+  var placeholder = document.getElementById("downloadPlaceholder");
+  var status = document.getElementById("packageSelection");
+  if (!/^[1-4]$/.test(group)){
+    link.hidden = true;
+    link.removeAttribute("href");
+    placeholder.hidden = false;
+    status.textContent = "Section " + section + " selected. Choose your assigned exam group.";
+    return;
+  }
+  var label = "Section " + section + " - Group " + group;
+  link.href = "output/exam_packages/groups/Section_" + section + "/Group_" + group +
+    "/INE315_Section_" + section + "_Group_" + group + "_STUDENT.zip";
+  link.textContent = "Download " + label + " (ZIP)";
+  link.setAttribute("aria-label", "Download exam package for " + label);
+  link.hidden = false;
+  placeholder.hidden = true;
+  status.textContent = label + ". Use only the package for your assigned group.";
 }
 
 function hi(text, t){
@@ -573,13 +665,16 @@ CATS.forEach(function(c, i){ addChip(c, i); });
 
 /* section buttons */
 function pick(which){
+  if (sec !== which) document.getElementById("examGroup").value = "";
   sec = which;
   document.getElementById("s1").setAttribute("aria-pressed", String(which === "s1"));
   document.getElementById("s2").setAttribute("aria-pressed", String(which === "s2"));
   renderWhen();
+  renderDownload();
 }
 document.getElementById("s1").onclick = function(){ pick("s1"); };
 document.getElementById("s2").onclick = function(){ pick("s2"); };
+document.getElementById("examGroup").addEventListener("change", renderDownload);
 
 document.getElementById("q").addEventListener("input", function(e){
   term = e.target.value; render();
